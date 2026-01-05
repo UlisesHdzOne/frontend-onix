@@ -8,14 +8,10 @@ import reactHooksPlugin from 'eslint-plugin-react-hooks';
 export default tseslint.config(
   {
     ignores: [
-      'eslint.config.mjs',
       'node_modules',
       'dist',
       'build',
-      '*.config.js',
-      'capacitor.config.ts',
-      'ionic.config.json',
-      'cypress',
+      '*.config.*',
       '**/*.cy.ts',
     ],
   },
@@ -30,14 +26,6 @@ export default tseslint.config(
     languageOptions: {
       globals: {
         ...globals.browser,
-        ...globals.node,
-      },
-      parserOptions: {
-        projectService: true,
-        tsconfigRootDir: import.meta.dirname,
-        ecmaFeatures: {
-          jsx: true,
-        },
       },
     },
     settings: {
@@ -48,25 +36,13 @@ export default tseslint.config(
   },
   {
     rules: {
-      // Reglas TypeScript (menos estrictas)
+      // Hacer ESLint menos estricto para aprender
       '@typescript-eslint/no-explicit-any': 'off',
-      '@typescript-eslint/no-unsafe-assignment': 'off',
-      '@typescript-eslint/no-unsafe-member-access': 'off',
-      '@typescript-eslint/no-unsafe-call': 'off',
-      '@typescript-eslint/no-unsafe-argument': 'off',
-      '@typescript-eslint/no-floating-promises': 'warn',
-      
-      // Reglas React
-      'react/react-in-jsx-scope': 'off',
-      'react/prop-types': 'off',
+      '@typescript-eslint/no-unused-vars': 'warn',
       'react-hooks/rules-of-hooks': 'error',
       'react-hooks/exhaustive-deps': 'warn',
-      
-      // Reglas adicionales
-      'no-console': 'warn',
-      
-      // Permitir interfaces vacías (para props de componentes)
-      '@typescript-eslint/no-empty-object-type': 'off',
+      'react/react-in-jsx-scope': 'off',
+      'no-console': 'off', // Permite console.log mientras aprendes
     },
   },
 );
