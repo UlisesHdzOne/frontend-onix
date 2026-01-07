@@ -6,7 +6,7 @@ import {
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
-import { LoginForm } from "../components/login/LoginForm";
+import { LoginForm } from "../components/forms/LoginForm";
 
 export const Home = () => {
   return (

@@ -16,9 +16,7 @@ export const useForm = <T extends string>(fieldsConfig: FieldsConfig<T>) => {
 
   (Object.keys(fieldsConfig) as T[]).forEach((key) => {
     initialValues[key] = fieldsConfig[key].initialValue ?? "";
-    initialErrors[key] = fieldsConfig[key].validator
-      ? fieldsConfig[key].validator!(initialValues[key])
-      : undefined;
+    initialErrors[key] = undefined;
     initialTouched[key] = false;
   });
 
@@ -38,9 +36,43 @@ export const useForm = <T extends string>(fieldsConfig: FieldsConfig<T>) => {
     if (v) setErrors((p) => ({ ...p, [field]: v(values[field]) }));
   };
 
-  const isValid =
-    Object.values(errors).every((e) => !e) &&
-    Object.values(values).every((v) => (v as string).trim() !== "");
+  const reset = () => {
+    setValues(initialValues);
+    setErrors(initialErrors);
+    setTouched(initialTouched);
+  };
 
-  return { values, errors, touched, isValid, handleChange, handleBlur };
+  // 🔥 NUEVO MÉTODO IMPORTANTE
+  const validateAll = (): boolean => {
+    let allValid = true;
+    const newErrors = { ...errors };
+    const newTouched = { ...touched };
+
+    (Object.keys(fieldsConfig) as T[]).forEach((key) => {
+      newTouched[key] = true; // Marcar como touched
+      const validator = fieldsConfig[key].validator;
+      if (validator) {
+        const error = validator(values[key]);
+        newErrors[key] = error;
+        if (error) allValid = false;
+      }
+    });
+
+    setTouched(newTouched);
+    setErrors(newErrors);
+    return allValid;
+  };
+
+  const isValid = Object.values(errors).every((e) => !e);
+
+  return {
+    values,
+    errors,
+    touched,
+    isValid,
+    handleChange,
+    handleBlur,
+    reset,
+    validateAll,
+  };
 };

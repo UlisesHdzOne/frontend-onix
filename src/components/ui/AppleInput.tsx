@@ -24,7 +24,7 @@ export const AppleInput = ({
   disabled,
 }: Props) => {
   const [focused, setFocused] = useState(false);
-  const inputId = name || label.replace(/\s+/g, "-").toLowerCase();
+  const inputId = name || (label ? label.replace(/\s+/g, "-").toLowerCase() : 'input');
 
   return (
     <div
