@@ -1,0 +1,21 @@
+.apple-button {
+  margin-top: 15px;
+  border-radius: 12px;
+  font-weight: 500;
+  font-size: 15px;
+  border: 1px solid #007aff;
+  color: #fff;
+  background: #007aff; /* 👈 ACTIVO CLARO */
+  transition: background 0.2s, opacity 0.2s, transform 0.1s;
+}
+
+/* PRESIONADO */
+.apple-button:not(.button-disabled):active {
+  transform: scale(0.98);
+}
+
+/* DESHABILITADO */
+.apple-button.button-disabled {
+  background: #007aff;
+  opacity: 0.4;
+}

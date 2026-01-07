@@ -1,0 +1,92 @@
+.apple-field {
+  margin-top: 12px;
+}
+
+/* Contenedor Apple */
+.apple-surface {
+  position: relative;
+  background: rgba(242, 242, 247, 0.9);
+  border: 1px solid #d1d1d6;
+  border-radius: 12px;
+  padding: 5px 12px 5px; /* reduce padding arriba */
+  transition: all 0.25s ease;
+}
+
+/* Input limpio */
+.apple-native-input {
+  --background: transparent;
+  --padding-start: 0;
+  --padding-end: 0;
+  --padding-top: 4px; /* reduce padding top/bottom */
+  --padding-bottom: 4px;
+
+  font-size: 16px;
+  color: #1c1c1e;
+}
+
+/* Label flotante */
+.apple-floating-label {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  font-size: 15px;
+  color: #8e8e93;
+  pointer-events: none;
+  transform: translateY(-50%);
+  transition: all 0.2s ease;
+}
+
+/* Focus */
+.apple-surface:has(.ion-focused) {
+  background: #ffffff;
+  border-color: #007aff;
+  box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.15);
+}
+
+/* Label sube (focus o con valor) */
+/* Label sube (focus real o con valor) */
+.apple-field.is-focused .apple-floating-label,
+.apple-field.has-value .apple-floating-label {
+  top: 11px;
+  font-size: 11px;
+  color: #007aff;
+}
+
+.apple-password-toggle {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  padding: 0;
+  color: #8e8e93;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.apple-password-toggle:active {
+  color: #007aff;
+}
+
+.apple-button {
+  --border-radius: 14px;
+  --box-shadow: none;
+  opacity: 0.6;
+  transition: opacity 0.2s ease, transform 0.1s ease;
+}
+
+/* HABILITADO */
+.apple-button:not(.button-disabled) {
+  opacity: 1;
+}
+
+/* PRESIONADO */
+.apple-button:not(.button-disabled):active {
+  transform: scale(0.98);
+}
+
+/* DESHABILITADO */
+.apple-button.button-disabled {
+  opacity: 0.4;
+}

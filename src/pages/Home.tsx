@@ -1,25 +1,32 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-import ExploreContainer from '../components/ExploreContainer';
-import './Home.css';
+import {
+  IonButton,
+  IonContent,
+  IonHeader,
+  IonPage,
+  IonTitle,
+  IonToolbar,
+} from "@ionic/react";
+import { LoginForm } from "../components/login/LoginForm";
 
-const Home: React.FC = () => {
+export const Home = () => {
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar>
-          <IonTitle>Blank</IonTitle>
+        <IonToolbar color="primary">
+          <IonButton slot="start" className="ion-padding-start">
+            Menú
+          </IonButton>
+          <IonTitle className="ion-text-center">CarWash</IonTitle>
+
+          <IonButton slot="end" className="ion-padding-end">
+            Perfil
+          </IonButton>
         </IonToolbar>
       </IonHeader>
-      <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Blank</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        <ExploreContainer />
+
+      <IonContent className="ion-padding">
+        <LoginForm />
       </IonContent>
     </IonPage>
   );
 };
-
-export default Home;

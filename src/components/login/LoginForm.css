@@ -1,0 +1,27 @@
+.login-form {
+  max-width: 650px; /* Limita ancho en pantallas grandes */
+  margin: 50px auto;
+
+  padding: 24px; /* Espacio interno */
+  background: #f9f9fb; /* Fondo ligeramente gris */
+  border-radius: 16px; /* Bordes redondeados */
+  border: 1px solid #e0e0e5; /* Borde suave */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Sombra sutil */
+  display: flex;
+  flex-direction: column;
+}
+
+.login-title {
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.login-subtitle {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.login-footer {
+  text-align: center;
+  margin-top: 12px;
+}
