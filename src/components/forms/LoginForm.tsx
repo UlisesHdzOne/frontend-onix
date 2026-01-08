@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useForm } from "../../hook/useForm";
 import { loginValidators } from "./validators";
 import { AppleInputForm } from "./AppleInputForm";
@@ -10,40 +9,46 @@ export const LoginForm = () => {
     values,
     errors,
     touched,
+    isValid,
+    isSubmitting,  // ← Del hook
+    submit,        // ← Del hook
     handleChange,
     handleBlur,
-    isValid,
     reset,
-    validateAll,
   } = useForm({
     email: { validator: loginValidators.email },
     password: { validator: loginValidators.password },
   });
 
-  const [loading, setLoading] = useState(false);
-
-  const handleSubmit = async () => {
-    // 🔥 PRIMERO validar todos los campos
-    const isFormValid = validateAll();
-
-    // Si no es válido, no hacer nada
-    if (!isFormValid || loading) return;
-
-    setLoading(true);
+  const handleLogin = async () => {
     try {
-      // Aquí iría tu llamada real a la API
-      // await login(values)
-      console.log("Enviando formulario:", values);
-
-      // Simular llamada API
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      // Opcional: resetear el formulario después del éxito
-      reset();
+      const success = await submit(async (formValues) => {
+        // Tu API call aquí
+        console.log("Enviando credenciales:", formValues);
+        
+        // Simular API call (reemplazar con fetch real)
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+        
+        // Ejemplo real:
+        // const response = await fetch('/api/auth/login', {
+        //   method: 'POST',
+        //   headers: { 'Content-Type': 'application/json' },
+        //   body: JSON.stringify(formValues)
+        // });
+        // 
+        // if (!response.ok) throw new Error('Error en login');
+        // return response.json();
+      });
+      
+      if (success) {
+        reset();
+        console.log("¡Login exitoso!");
+        // Navegar a dashboard, guardar token, etc.
+      }
+      
     } catch (error) {
       console.error("Error en login:", error);
-    } finally {
-      setLoading(false);
+      // Mostrar error al usuario
     }
   };
 
@@ -75,9 +80,9 @@ export const LoginForm = () => {
 
       <AppleButton
         expand="block"
-        disabled={!isValid && Object.values(touched).some((t) => t)} // Mostrar disabled solo si hay errores Y se ha tocado algo
-        loading={loading}
-        onClick={handleSubmit}
+        disabled={!isValid || isSubmitting}  // ← Usa isSubmitting del hook
+        loading={isSubmitting}               // ← Usa isSubmitting del hook
+        onClick={handleLogin}
       >
         Acceder
       </AppleButton>

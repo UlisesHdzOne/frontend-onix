@@ -23,6 +23,28 @@ export const useForm = <T extends string>(fieldsConfig: FieldsConfig<T>) => {
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState(initialErrors);
   const [touched, setTouched] = useState(initialTouched);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // 🔥 DECLARAR validateAll PRIMERO
+  const validateAll = (): boolean => {
+    let allValid = true;
+    const newErrors = { ...errors };
+    const newTouched = { ...touched };
+
+    (Object.keys(fieldsConfig) as T[]).forEach((key) => {
+      newTouched[key] = true;
+      const validator = fieldsConfig[key].validator;
+      if (validator) {
+        const error = validator(values[key]);
+        newErrors[key] = error;
+        if (error) allValid = false;
+      }
+    });
+
+    setTouched(newTouched);
+    setErrors(newErrors);
+    return allValid;
+  };
 
   const handleChange = (field: T, value: string) => {
     setValues((p) => ({ ...p, [field]: value }));
@@ -42,26 +64,21 @@ export const useForm = <T extends string>(fieldsConfig: FieldsConfig<T>) => {
     setTouched(initialTouched);
   };
 
-  // 🔥 NUEVO MÉTODO IMPORTANTE
-  const validateAll = (): boolean => {
-    let allValid = true;
-    const newErrors = { ...errors };
-    const newTouched = { ...touched };
+  // Ahora submit PUEDE usar validateAll
+const submit = async (
+  onSubmit: (values: Record<T, string>) => Promise<void>
+) => {
+  const isValidForm = validateAll();
+  if (!isValidForm || isSubmitting) return false;
 
-    (Object.keys(fieldsConfig) as T[]).forEach((key) => {
-      newTouched[key] = true; // Marcar como touched
-      const validator = fieldsConfig[key].validator;
-      if (validator) {
-        const error = validator(values[key]);
-        newErrors[key] = error;
-        if (error) allValid = false;
-      }
-    });
-
-    setTouched(newTouched);
-    setErrors(newErrors);
-    return allValid;
-  };
+  setIsSubmitting(true);
+  try {
+    await onSubmit(values);
+    return true;
+  } finally {
+    setIsSubmitting(false);
+  }
+};
 
   const isValid = Object.values(errors).every((e) => !e);
 
@@ -70,9 +87,10 @@ export const useForm = <T extends string>(fieldsConfig: FieldsConfig<T>) => {
     errors,
     touched,
     isValid,
+    isSubmitting,
+    submit,
     handleChange,
     handleBlur,
     reset,
-    validateAll,
   };
 };
