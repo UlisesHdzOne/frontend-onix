@@ -10,8 +10,8 @@ export const LoginForm = () => {
     errors,
     touched,
     isValid,
-    isSubmitting,  // ← Del hook
-    submit,        // ← Del hook
+    isSubmitting, // ← Del hook
+    submit, // ← Del hook
     handleChange,
     handleBlur,
     reset,
@@ -25,27 +25,26 @@ export const LoginForm = () => {
       const success = await submit(async (formValues) => {
         // Tu API call aquí
         console.log("Enviando credenciales:", formValues);
-        
+
         // Simular API call (reemplazar con fetch real)
         await new Promise((resolve) => setTimeout(resolve, 1000));
-        
+
         // Ejemplo real:
         // const response = await fetch('/api/auth/login', {
         //   method: 'POST',
         //   headers: { 'Content-Type': 'application/json' },
         //   body: JSON.stringify(formValues)
         // });
-        // 
+        //
         // if (!response.ok) throw new Error('Error en login');
         // return response.json();
       });
-      
+
       if (success) {
         reset();
         console.log("¡Login exitoso!");
         // Navegar a dashboard, guardar token, etc.
       }
-      
     } catch (error) {
       console.error("Error en login:", error);
       // Mostrar error al usuario
@@ -80,9 +79,15 @@ export const LoginForm = () => {
 
       <AppleButton
         expand="block"
-        disabled={!isValid || isSubmitting}  // ← Usa isSubmitting del hook
-        loading={isSubmitting}               // ← Usa isSubmitting del hook
+        disabled={!isValid || isSubmitting} // ← Usa isSubmitting del hook
+        loading={isSubmitting} // ← Usa isSubmitting del hook
+        loadingText="Verificando..." // ✅ Texto profesional durante carga
         onClick={handleLogin}
+        className=" 
+          ion-margin-top 
+          ion-text-bold 
+          ion-text-uppercase
+          ion-color-primary"
       >
         Acceder
       </AppleButton>

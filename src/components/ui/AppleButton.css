@@ -1,21 +1,20 @@
 .apple-button {
-  margin-top: 15px;
-  border-radius: 12px;
-  font-weight: 500;
-  font-size: 15px;
-  border: 1px solid #007aff;
-  color: #fff;
-  background: #007aff; /* 👈 ACTIVO CLARO */
-  transition: background 0.2s, opacity 0.2s, transform 0.1s;
+  /* variables locales */
+  --spinner-size: 18px; /* tamaño del spinner */
+  min-height: 44px; /* asegura altura mínima del botón */
 }
 
-/* PRESIONADO */
-.apple-button:not(.button-disabled):active {
-  transform: scale(0.98);
+.apple-button-content {
+  display: inline-flex; /* organiza spinner + texto horizontal */
+  align-items: center; /* centra verticalmente */
+  gap: 8px; /* espacio entre el spinner y el texto */
 }
 
-/* DESHABILITADO */
-.apple-button.button-disabled {
-  background: #007aff;
-  opacity: 0.4;
+.apple-button-spinner {
+  width: var(--spinner-size); /* tamaño del spinner */
+  height: var(--spinner-size); /* tamaño del spinner */
+}
+
+.apple-button-text {
+  line-height: 1; /* altura de línea */
 }

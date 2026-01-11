@@ -7,9 +7,10 @@ interface Props {
   fill?: "solid" | "clear" | "outline";
   size?: "small" | "default" | "large";
   expand?: "block" | "full";
-  color?: string;
   disabled?: boolean;
   loading?: boolean;
+  loadingText?: string;
+  className?: string;
 }
 
 export const AppleButton = ({
@@ -18,21 +19,31 @@ export const AppleButton = ({
   fill = "solid",
   size = "default",
   expand,
-  color,
   disabled,
   loading = false,
+  loadingText,
+  className = "",
 }: Props) => {
   return (
     <IonButton
-      className="apple-button"
       onClick={onClick}
       fill={fill}
-      size={size}
-      expand={expand}
-      disabled={disabled || loading}
-      style={{ color }}
+      size={size} 
+      expand={expand} 
+      disabled={disabled || loading} 
+      className={`apple-button ${className}`}
     >
-      {loading ? <IonSpinner name="crescent" /> : children}
+      {loading ? (
+        <span className="apple-button-content">
+          <IonSpinner 
+          name="crescent" 
+          className="apple-button-spinner" 
+          />
+          <span className="apple-button-text">{loadingText || children}</span>
+        </span>
+      ) : (
+        children
+      )}
     </IonButton>
   );
 };
